@@ -95,7 +95,6 @@ void bubbleSort(int arr[]) {
 
 //selectSort
 //boj25305
-/*
 #include <iostream>
 using namespace std;
 
@@ -109,7 +108,10 @@ int main(void) {
 	cin>>n>>k;
 	get_num(score, n);
 	selectionSort(score,n);
+	
+	cout << score[n-k];
 
+	return 0;
 }
 
 void get_num(int arr[],int n) {
@@ -120,13 +122,41 @@ void get_num(int arr[],int n) {
 	}
 }
 
+/*
 void selectionSort(int arr[],int n) {
 	for (int i = 0; i < n; i++) {
-		for (int j = n - i; j > 0; j--) {
-			int Max = arr[0];
-			arr[]
+		int Max;
+
+		for (int j = 0; j <n-i; j++) {
+			Max = 0;
+			if (arr[Max] < arr[j])
+				Max = j;
+			else continue;
+		}
+		int tmp;
+		tmp = arr[n - i];
+		arr[n - i] = arr[Max];
+		arr[Max] = tmp;
+	}
+}
+*/
+
+void selectionSort(int arr[], int n) {
+	for (int i = 0; i < n - 1; i++) { // n-1번 반복
+		int minIndex = i; // 최소값의 인덱스를 i로 초기화
+
+		// i 이후의 원소 중에서 최소값을 찾음
+		for (int j = i + 1; j < n; j++) {
+			if (arr[j] < arr[minIndex]) {
+				minIndex = j;
+			}
+		}
+
+		// 최소값을 현재 위치(i)와 교환
+		if (minIndex != i) {
+			int tmp = arr[i];
+			arr[i] = arr[minIndex];
+			arr[minIndex] = tmp;
 		}
 	}
 }
-//수도코드로 먼저 표현해보자
-*/
