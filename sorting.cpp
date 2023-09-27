@@ -95,6 +95,7 @@ void bubbleSort(int arr[]) {
 
 //selectSort
 //boj25305
+/*
 #include <iostream>
 using namespace std;
 
@@ -122,8 +123,8 @@ void get_num(int arr[],int n) {
 	}
 }
 
-/*
-void selectionSort(int arr[],int n) {
+
+void selectionSort(int arr[],int n) { //잘못된 코드
 	for (int i = 0; i < n; i++) {
 		int Max;
 
@@ -139,7 +140,7 @@ void selectionSort(int arr[],int n) {
 		arr[Max] = tmp;
 	}
 }
-*/
+
 
 void selectionSort(int arr[], int n) {
 	for (int i = 0; i < n - 1; i++) { // n-1번 반복
@@ -159,4 +160,70 @@ void selectionSort(int arr[], int n) {
 			arr[minIndex] = tmp;
 		}
 	}
+}
+*/
+
+//boj1427
+/*
+#include <iostream>
+using namespace std;
+
+void selectionSort(long long arr[]);
+void get_num(long long arr[]);
+
+static int n=0;
+
+int main(void) {
+	long long score[1000];
+	int k;
+
+	cin >> n >> k;
+	get_num(score);
+	selectionSort(score);
+
+	for (int i = 0; i < n; i++)
+		cout << score[i];
+
+	return 0;
+}
+
+void get_num(long long arr[]) {
+	int i = 0;
+	while (!NULL) {
+		int num = 0;
+		cin >> num;
+		arr[i] = num;
+		n++;
+	}
+}
+
+void selectionSort(long long arr[]) {
+	for (int i = 0; i < n - 1; i++) { // n-1번 반복
+		int minIndex = i; // 최소값의 인덱스를 i로 초기화
+
+		// i 이후의 원소 중에서 최소값을 찾음
+		for (int j = i + 1; j < n; j++) {
+			if (arr[j] < arr[minIndex]) {
+				minIndex = j;
+			}
+		}
+
+		// 최소값을 현재 위치(i)와 교환
+		if (minIndex != i) {
+			int tmp = arr[i];
+			arr[i] = arr[minIndex];
+			arr[minIndex] = tmp;
+		}
+	}
+}
+*/
+
+#include <iostream>
+#include <algorithm>
+using namespace std;
+int main(void) {
+	string str;
+	cin >> str;
+	sort(str.begin(), str.end(), greater<char>());
+	cout << str;
 }
