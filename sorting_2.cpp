@@ -72,6 +72,7 @@ int main(void) {
 
 	return 0;
 }*/
+/*
 #include<iostream>
 #define SIZE 10
 
@@ -133,4 +134,98 @@ int main(void) {
 		cout << arr[i] << " ";
 
 	return 0;
+}
+*/
+
+//기수정렬
+//radix sort
+
+//boj2751
+
+#include <iostream>
+#include <queue>
+
+using namespace std;
+
+#define MAX_NUM (1000001)
+
+void Input();
+void RadixSort();
+void PrintAnswer();
+
+int N, maxValue;
+queue<int> q[10];
+int radixArray[MAX_NUM];
+
+int main()
+{
+	// sync off
+	ios::sync_with_stdio(false);
+	cin.tie(0);
+	cout.tie(0);
+
+	Input();
+	RadixSort();
+	PrintAnswer();
+}
+
+void Input()
+{
+	cin >> N;
+
+	for (int i = 0; i < N; i++)
+	{
+		cin >> radixArray[i];
+	}
+}
+
+void RadixSort()
+{
+	int radix = 1;
+
+	// 음수를 양수로 만들어서 정렬한다.
+	for (int i = 0; i < N; i++)
+	{
+		radixArray[i] += 1000000;
+
+		if (radixArray[i] > maxValue)
+		{
+			maxValue = radixArray[i];
+		}
+	}
+
+	// 기수 정렬 진행
+	while ((maxValue / radix) > 0)
+	{
+		for (int i = 0; i < N; i++)
+		{
+			q[((radixArray[i] / radix) % 10)].push(radixArray[i]);
+		}
+
+		int index = 0;
+		for (int i = 0; i < 10; i++)
+		{
+			while (!q[i].empty())
+			{
+				radixArray[index++] = q[i].front();
+				q[i].pop();
+			}
+		}
+
+		radix *= 10;
+	}
+
+	// 더해줬던 가중치를 다시 빼준다.
+	for (int i = 0; i < N; i++)
+	{
+		radixArray[i] -= 1000000;
+	}
+}
+
+void PrintAnswer()
+{
+	for (int i = 0; i < N; i++)
+	{
+		cout << radixArray[i] << "\n";
+	}
 }
