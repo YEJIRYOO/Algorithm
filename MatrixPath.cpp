@@ -1,7 +1,13 @@
+/***********************
+과제 5 : 행렬 경로 문제 동적 프로그래밍
+20222979 유예지
+************************/
+
+
 #include<iostream>
 using namespace std;
 
-
+//배열 초기화 함수
 void getArr(int* arr[],int n) {
 	for (int i = 0; i < n + 1; i++) {
 		if(i!=0) cout << i<<"행 입력 : ";
@@ -14,19 +20,20 @@ void getArr(int* arr[],int n) {
 	}
 }
 
-//큰 값 반환
+//큰 값 반환 함수
 int Max(int a, int b) {
 	a = a > b ? a : b;
 
 	return a;
 }
 
+//이동 경로 출력
 void path(int n, int* c[]) {
 	int l = n;
 	int r = n;
 	int s = 2 * n - 1;
-	int* al = new int[s];
-	int* ar = new int[s];
+	int* al = new int[s];//x좌표 저장 배열
+	int* ar = new int[s];//y좌표 저장 배열
 
 	while (l > 0 && r > 0) {
 		//		cout << "(" << l << "," << r << ")";
@@ -41,12 +48,13 @@ void path(int n, int* c[]) {
 		cout << "(" << al[i] << "," << ar[i] << ")";
 		if (i < 2 * n - 2)cout << "->";
 	}
-
+	
+	//배열 할당 해제
 	delete[] al;
 	delete[] ar;
 }
 
-
+//행렬 경로
 void matrixPath(int n) {
 
 	//n*n_2배열 동적 할당 및 초기화_0으로
@@ -55,6 +63,7 @@ void matrixPath(int n) {
 		arr[i] = new int[n + 1];
 	}
 
+	//행렬 값 입력
 	getArr(arr, n);
 
 	int** c = new int* [n + 1];
@@ -71,6 +80,7 @@ void matrixPath(int n) {
 	//최댓값 출력
 	cout<<"최대값 : " << c[n][n] << endl;
 
+	//경로 출력
 	cout << "경로 : ";
 	path(n, c);
 
