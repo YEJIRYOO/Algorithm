@@ -1,0 +1,13 @@
+#include<iostream>
+using namespace std;
+
+int main(void){
+    int a,b,val;
+    
+    cin>>a>>b;
+    val=a-b;
+    
+    cout<<val;
+    
+    return 0;
+}
