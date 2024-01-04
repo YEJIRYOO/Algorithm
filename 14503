@@ -1,0 +1,75 @@
+#include <iostream>
+#include <queue>
+using namespace std;
+
+struct State {
+	int x, y;
+	int d;
+};
+
+int N, M;
+int Map[50][50];
+bool cleaned[50][50];
+queue<State>q;
+const int dx[] = { -1,0,1,0 };
+const int dy[] = { 0,1,0,-1 };
+
+int Cleaner(int r,int c,int dir) {
+	int cnt = 1;
+	queue<State>q;
+	q.push({ r,c,dir });
+	cleaned[r][c] = true;
+	while (!q.empty()) {
+		int x = q.front().x;
+		int y = q.front().y;
+		int d = q.front().d;
+		q.pop();
+		bool flag = false;
+		//왼쪽부터 4방향 탐색
+		for (int i = 0; i < 4; i++) {
+			int nd = d - 1;
+			if (d == 0)
+				nd = 3;
+			int nx = x + dx[nd];
+			int ny = y + dy[nd];
+			//왼쪽 방향에 청소할 공간이 없다면 그 방향으로 회전하고 다시 탐색
+			if (Map[nx][ny] == 1 || cleaned[nx][ny] == true) {
+				d = nd;
+				continue;
+			}
+			//아직 청소하지 않은 공간 존재하면
+			if (cleaned[nx][ny] == false) {
+				cleaned[nx][ny] = true;
+				//그 방향으로 회전한 다음 한 칸 전진
+				q.push({ nx,ny,nd });
+				//청소한 칸 개수 세기
+				cnt++;
+				flag = true;
+				break;
+			}
+		}
+		//네 방향 모두 청소가 이미 되어있거나 벽인 경우
+		if (flag == false) {
+			//후진
+			int bx = x - dx[d];
+			int by = y - dy[d];
+			//뒤쪽 방향이 벽이 아니면
+			if (Map[bx][by] != 1)
+				q.push({ bx,by,d });
+		}
+	}
+	return cnt;
+}
+
+int main() {
+	cin >> N >> M;
+	int r, c, d;
+	cin >> r >> c >> d;
+	for (int i = 0; i < N; i++) {
+		for (int j = 0; j < M; j++) {
+			cin >> Map[i][j];
+		}
+	}
+	cout << Cleaner(r, c, d) << '\n';
+	return 0;
+}
