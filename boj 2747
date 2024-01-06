@@ -1,0 +1,22 @@
+#include<iostream>
+using namespace std;
+
+int n[46];
+int fibo(int x){
+    n[0]=0;
+    n[1]=1;
+    
+    for(int a=2;a<=x;a++){
+        n[a]=n[a-1]+n[a-2];
+    }
+    return n[x];
+}
+
+int main(void){
+    int num,result;
+    cin>>num;
+    result=fibo(num);
+    cout<<result;
+    
+    return 0;
+}
