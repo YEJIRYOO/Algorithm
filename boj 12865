@@ -1,0 +1,39 @@
+#include <iostream>
+#include <vector>
+#include <queue>
+#include <algorithm>
+#define P pair<int,int>
+using namespace std;
+//[물품 수][무게]
+int arr[101][100001];
+int allweight[101];
+
+int main() {
+	ios::sync_with_stdio(false);
+	cin.tie(0);
+
+	int n, k, w, v;
+	cin >> n >> k;
+	//(무게,가치)의 쌍을 담는 벡터 vv
+	vector<P> vv;
+	for (int i = 0; i < n; i++) {
+		cin >> w >> v;
+		vv.push_back(P(w, v));
+	}
+	for (int i = 1; i <= n; i++) {
+		for (int j = 1; j <= k; j++) {
+			int curweight = vv[i-1].first;
+			int curval = vv[i-1].second;
+
+			if (curweight <= j) {
+				arr[i][j] = max(arr[i - 1][j - curweight] + curval, arr[i - 1][j]);
+			}
+
+			else {
+				arr[i][j] = arr[i - 1][j];
+			}
+		}
+	}
+	cout << arr[n][k];
+
+}
