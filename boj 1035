@@ -1,0 +1,66 @@
+#include<iostream>
+#include<vector>
+#include<cstring>
+#define f(a,b) for(int a=0;a<b;++a)
+ 
+using namespace std;
+ 
+struct pos{int i,j;};
+vector<pos> v;
+int minDist, d[4][2]={{1,0},{-1,0},{0,1},{0,-1}};
+bool used[5][5], visited[5][5];
+ 
+int count(pos p){
+    int i=p.i,j=p.j;
+    visited[i][j]=true;
+    int cnt=1;
+    f(k,4){
+        int ni=i+d[k][0],nj=j+d[k][1];
+        if(ni==-1||nj==-1||ni==5||nj==5||!used[ni][nj]||visited[ni][nj])continue;
+        cnt+=count({ni,nj});
+    }
+    return cnt;
+}
+ 
+pos findFirstPos(){
+    f(i,5)f(j,5)if(used[i][j])return {i,j};
+    return {-1,-1};
+}
+ 
+bool possible(){
+    memset(visited,false,sizeof(visited));
+    return count(findFirstPos())==v.size();
+}
+ 
+void bruteForce(int n,int dist){
+    if(dist>=minDist)return;
+    
+    if(n==v.size()){
+        if(possible())if(minDist>dist)minDist=dist;
+        return;
+    }
+    
+    f(i,5)f(j,5){
+        if(used[i][j])continue;
+        
+        used[i][j]=true;
+        bruteForce(n+1,dist+abs(i-v[n].i)+abs(j-v[n].j));
+        used[i][j]=false;
+    }
+}
+ 
+void init(){
+    string s[5];
+    f(i,5)cin>>s[i];
+    f(i,5)f(j,5)if(s[i][j]=='*')v.push_back({i,j});
+    minDist=50;
+    memset(used,false,sizeof(used));
+}
+ 
+int main(){
+    init();
+    bruteForce(0,0);
+    cout<<minDist<<endl;
+    
+    return 0;
+}
