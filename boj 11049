@@ -26,7 +26,7 @@ int main()
 			for (int k = j; k <= i + j; k++)
 			{
 				dp[j][i + j] = min(dp[j][i + j], dp[j][k] + dp[k + 1][i + j] + matrix[j][0] * matrix[k][1] * matrix[i+j][1]);
-			}
+			}//dp구현
 		}
 
 	}
