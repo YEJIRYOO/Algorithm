@@ -5,7 +5,7 @@
  
 using namespace std;
  
-struct pos{int i,j;};
+struct pos{int i,j;}; //struct import
 vector<pos> v;
 int minDist, d[4][2]={{1,0},{-1,0},{0,1},{0,-1}};
 bool used[5][5], visited[5][5];
